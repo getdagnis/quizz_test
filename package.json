@@ -1,0 +1,11 @@
+{
+  "name": "printful-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "none"
+  },
+  "author": "getdagnis",
+  "license": "ISC"
+}
