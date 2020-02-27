@@ -57,7 +57,7 @@ h1 {
 }
 
 h2 {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     font-weight: 700;
     margin: .5rem auto 1rem;
     padding: 0 1rem;
@@ -375,7 +375,7 @@ input[type=text]::placeholder {
     padding-top: 0;
     padding-bottom: 0;
     color: white;
-    margin: .5rem;
+    margin: .5rem auto;
     animation: slideFromRight 1s ease;
     animation-fill-mode: backwards;
     overflow: hidden;

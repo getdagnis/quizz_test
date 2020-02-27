@@ -19,6 +19,8 @@ function letsBegin() {
     
     container.innerHTML = html;
     logo.addEventListener('click', () => {
+        currentQuestionsSlidePositionGlobal = 0;
+        allAnswersGlobal = [];
         letsBegin();
     });
 
@@ -29,7 +31,7 @@ function letsBegin() {
             86721: {quizz: "169", answer: "16491553743", title: "12"},
             149197: {quizz: "169", answer: "44999309833", title: "16"},
             215738: {quizz: "169", answer: "230209877627", title: "17"}};
-            launchSlideFour('169');
+            launchSlideFour();
         } else if (name && name.length > 0) {
             launchSlideTwoFetch('Welcome back', name);
             console.log('Welcome back,', name);
