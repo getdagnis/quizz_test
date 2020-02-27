@@ -1,10 +1,9 @@
 
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap&subset=latin-ext');
 
 body {
     margin: 0;
     background: #fafafa;
-    font-family: 'Proxima Nova', 'Montserrat', Roboto, 'Open Sans', 'Segoe UI', -apple-system, 'Helvetica Neue', sans-serif;
+    font-family: 'Proxima Nova', Roboto, 'Open Sans', 'Segoe UI', -apple-system, 'Helvetica Neue', sans-serif;
     letter-spacing: -.3px;
     font-size: 1.2rem;
     text-align: center;
