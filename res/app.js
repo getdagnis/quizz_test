@@ -231,7 +231,6 @@ function selectThisButton(event, slideName) {
                 proceedBtn.addEventListener('mouseup', () => {
                 currentSlide.classList.replace('slide-in', 'slide-out');
                 launchSlideThree(selectedId);
-                console.log(selectedId)
                 });
             }
         }
@@ -475,7 +474,11 @@ function launchSlideFour(quizzId) {
                     delay += 0.3;
                 }
 
-                tryAgainButton.addEventListener('click', letsBegin);
+                tryAgainButton.addEventListener('click', () => {
+                    currentQuestionsSlidePositionGlobal = 0;
+                    allAnswersGlobal = [];
+                    letsBegin();
+                });
 
                 answersDiv.insertAdjacentHTML('beforeend', `
                 <p class="result-p">You responded correctly to <span class="result-span">${allCorrectAnswers.length}
@@ -497,6 +500,7 @@ function catchFetchError(err) {
     <br>(${err})
     <br><br><a href="javascript:location.reload();">Reload?</a></h3>`
     console.error('Error:', err);
+    
 }
 
 
