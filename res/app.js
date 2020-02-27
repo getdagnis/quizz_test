@@ -475,7 +475,10 @@ function launchSlideFour(quizzId) {
                     delay += 0.3;
                 }
 
-                tryAgainButton.addEventListener('click', letsBegin);
+                tryAgainButton.addEventListener('click', () => {
+                    currentQuestionsSlidePositionGlobal = 0;
+                    letsBegin();
+                });
 
                 answersDiv.insertAdjacentHTML('beforeend', `
                 <p class="result-p">You responded correctly to <span class="result-span">${allCorrectAnswers.length}
