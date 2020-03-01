@@ -5,14 +5,13 @@ function letsBegin() {
     const name = localStorage.getItem('printful_quizz_name');
     const logo = document.getElementById('logo');
     const developerMode = false;
-    let currentQuestionsSlidePositionGlobal = 0;
     
     // Sets beginning template
     let html = `
         <div class="name-slide hidden-slide">
             <h3>Welcome to</h3>
             <h1>Printful Front-End Task</h1>
-            <input type="text" name="name-input" id="name-input" placeholder="Type your name">
+            <input autcomplete="off" type="text" name="name-input" id="name-input" placeholder="Type your name">
             <div class="button inactive name-btn">My name is ...</div>
         </div>
     `;
@@ -27,10 +26,10 @@ function letsBegin() {
     setTimeout(() => {
         if (developerMode === true) {
             allAnswersGlobal = {29543: {quizz: "169", answer: "309744200", title: "Eight"},
-            58186: {quizz: "169", answer: "1874097505", title: "Eight"},
-            86721: {quizz: "169", answer: "16491553743", title: "12"},
-            149197: {quizz: "169", answer: "44999309833", title: "16"},
-            215738: {quizz: "169", answer: "230209877627", title: "17"}};
+                58186: {quizz: "169", answer: "1874097505", title: "Eight"},
+                86721: {quizz: "169", answer: "16491553743", title: "12"},
+                149197: {quizz: "169", answer: "44999309833", title: "16"},
+                215738: {quizz: "169", answer: "230209877627", title: "17"}};
             launchSlideFour();
         } else if (name && name.length > 0) {
             launchSlideTwoFetch('Welcome back', name);
@@ -42,7 +41,7 @@ function letsBegin() {
 }
 
 // Async function that will handle all potential network requests
-const sendFetchRequest = async (method, url, data, head) => {
+const sendFetchRequest = async (method, url, data) => {
     const res = await fetch(url, {
         method: method,
         body: data,
@@ -78,7 +77,7 @@ function launchSlideOne() {
                 button.classList.replace('inactive', 'active');
                 button.innerHTML = `My name is ${cleanUpName(input.value)}!`
             }, 600);
-        };
+        }
     });
 
     // Listens to ENTER getting pressed after entering their name
@@ -94,7 +93,7 @@ function launchSlideOne() {
          } else {
             input.focus();
          } 
-    })
+    });
 
     // Listens to a click on the 'my name is...' button 
     button.addEventListener('click', () => {
@@ -114,7 +113,7 @@ function launchSlideOne() {
 
 // Cleans up the name string a bit, allows only Latin based alphabet characters and numbers
 function cleanUpName(name) {
-    name = name.replace(/[^A-Z0-9À-ǿ' ]/gi, '')
+    name = name.replace(/[^A-Z0-9À-ǿ ]/gi, '');
     return name.charAt(0).toUpperCase() + name.substring(1);
 }
 
@@ -172,7 +171,7 @@ function launchSlideTwo(message, name, quizzes) {
             });
 
             // Wait for the test buttons to appear, then add hover animations
-            for (test of tests) {
+            for (let test of tests) {
                 test.classList.add('test-loaded');
             }
         }, 2000);
@@ -198,7 +197,7 @@ function launchSlideTwo(message, name, quizzes) {
         setTimeout(() => {
             let allTests = document.getElementsByClassName('test-name');
 
-            for (test of allTests) {
+            for (let test of allTests) {
                 test.addEventListener('click', () => selectThisButton(event, 'test'));
             }
         }, 100);
@@ -219,7 +218,7 @@ function selectThisButton(event, slideName) {
     clearSelected();
 
     // Selects/Unselects buttons. Launches SlideThree if necessary
-    for (button of allButtons) {
+    for (let button of allButtons) {
         if (button !== event.target.parentElement) {
             button.classList.add('unselected');
         } else {
@@ -252,7 +251,6 @@ function clearSelected() {
     }
 }
 
-
 /////////////////////////////////////
 //     SLIDE THREE –-- ANSWERS     //
 /////////////////////////////////////
@@ -261,6 +259,9 @@ function launchSlideThree(quizzId) {
     const container = document.querySelector('#container');
     const newDiv = document.createElement('div');
     let urlQuestions = `https://printful.com/test-quiz.php?action=questions&quizId=` + quizzId;
+
+    currentQuestionsSlidePositionGlobal = 0;
+    allAnswersGlobal = {};
 
     // Creates the main Slide Three div
     setTimeout(() => {
@@ -354,7 +355,7 @@ function populateThisQuestionWithAnswers(answers, questionId, quizzId) {
     let answersDiv = document.getElementById(questionId);
 
     // HTML Answers Template
-    for (answer of answers) {
+    for (let answer of answers) {
         answersDiv.insertAdjacentHTML('beforeend', `
             <div class="answer id-${quizzId}" id="${answer.id}" style="animation-delay: ${(delay % 2 === 0) ? delay / 12 : delay / 8}s;">
                 <p class="answer-name">${answer.title}</p>
@@ -366,10 +367,10 @@ function populateThisQuestionWithAnswers(answers, questionId, quizzId) {
     // Adds event listeners to each answer and let's them be selected, moves progress bar if so
     let answerItems = document.getElementsByClassName('answer');
 
-    for (item of answerItems) {
+    for (let item of answerItems) {
         item.addEventListener('click', (event) => {
             if (event.target.classList.contains('answer-name')) {
-                // POPULATES THE RESULTS OBJECT WITH ANSWERS (last one selected per question)!
+                // POPULATES THE RESULTS OBJECT WITH USER ANSWERS (last one selected per question)!
                 let thisAnswer = { quizz: quizzId, answer: event.target.parentElement.id, title: event.target.innerHTML};
                 allAnswersGlobal[questionId] = thisAnswer;
 
@@ -409,13 +410,13 @@ function moveProgressBar(event) {
     const progressIncrement = 100 / Number(progress.classList[2]); 
     let newProgressWidth = Number(currentProgress) + Number(progressIncrement);
 
-    // Moves the progress bar if but first checks if it hasn't already moved on this question by checking for a class
+    // Moves the progress bar but first checks if it hasn't already moved on this question by checking for a class
     if (event.target.parentElement.parentElement.classList.contains('progress-not-used')) {
         setTimeout(() => {
-            progress.classList.replace(currentProgress, newProgressWidth)
+            progress.classList.replace(currentProgress, newProgressWidth);
             progress.style.width = newProgressWidth + 'vw';
         }, 100);
-        event.target.parentElement.parentElement.classList.remove('progress-not-used')
+        event.target.parentElement.parentElement.classList.remove('progress-not-used'); 
     }
 }
 
@@ -426,10 +427,8 @@ function moveProgressBar(event) {
 function launchSlideFour(quizzId) {
     const container = document.querySelector('#container');
     const newDiv = document.createElement('div');
-    const name = localStorage.getItem('printful_quizz_name');
-    // const initiallAllAnswersLength = allAnswersGlobal
+    const name = localStorage.getItem('printful_quizz_name');    
     
-
     for (answer in allAnswersGlobal) {
         let answerKey = answer;
         let answerId = allAnswersGlobal[answerKey]['answer'];
@@ -493,7 +492,7 @@ function launchSlideFour(quizzId) {
     }, 200);
 }
 
-// Show user friendly error if fetch malfunctions
+// Output user friendly fetch error
 function catchFetchError(err) {
     const container = document.querySelector('#container');
 
@@ -502,7 +501,6 @@ function catchFetchError(err) {
     <br>(${err})
     <br><br><a href="javascript:location.reload();">Reload?</a></h3>`
     console.error('Error:', err);
-    
 }
 
 
