@@ -13,3 +13,5 @@ The task was to build a JavaScript Quizz application that:
 - This project uses no pre-built scripts or any JS libraries/frameworks. All code is 100% written by myself && most of it offline
 - This is my FIRST fully finished Vanilla JS project less than a year after beginning to learn JavaScript
 - This is probably also my LAST purely Vanilla JS written project as I'm looking forward to dig deeper into React, Angular, Vue and/or Svelte
+
+Try the demo here: https://getdagnis.github.io/quizz_test/
